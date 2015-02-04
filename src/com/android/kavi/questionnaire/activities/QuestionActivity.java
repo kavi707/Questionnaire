@@ -1,4 +1,4 @@
-package com.android.kavi.questionnaire;
+package com.android.kavi.questionnaire.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.kavi.questionnaire.R;
 
 /**
  * Created by kavi707 on 2/3/15.

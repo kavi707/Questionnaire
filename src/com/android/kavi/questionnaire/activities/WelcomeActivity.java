@@ -1,10 +1,10 @@
-package com.android.kavi.questionnaire;
+package com.android.kavi.questionnaire.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.kavi.questionnaire.QuestionActivity;
+import com.android.kavi.questionnaire.R;
 
 /**
  * Created by kavi707 on 1/3/15.
