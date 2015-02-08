@@ -56,15 +56,19 @@
 
             <Button
                 android:id="@+id/answerOneButton"
+                android:background="@drawable/question_bg"
+                android:textColor="@color/white"
                 android:text="Answer 01"
                 android:layout_width="260dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="35dp" />
 
             <Button
                 android:id="@+id/answerTwoButton"
+                android:background="@drawable/question_bg"
+                android:textColor="@color/white"
                 android:text="Answer 02"
                 android:layout_width="260dp"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_gravity="right" />
 
         </FrameLayout>
@@ -75,15 +79,19 @@
 
             <Button
                 android:id="@+id/answerThreeButton"
+                android:background="@drawable/question_bg"
+                android:textColor="@color/white"
                 android:text="Answer 03"
                 android:layout_width="260dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="35dp" />
 
             <Button
                 android:id="@+id/answerFourButton"
+                android:background="@drawable/question_bg"
+                android:textColor="@color/white"
                 android:text="Answer 04"
                 android:layout_width="260dp"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_gravity="right" />
 
         </FrameLayout>
