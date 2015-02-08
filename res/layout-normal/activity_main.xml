@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@drawable/background_normal"
+    android:paddingLeft="30dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/mainLogoImageView"
+        android:src="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Who wants to be a Millionier?"
+        android:gravity="center"
+        android:id="@+id/titleTextView"
+        android:textSize="25dp"
+        android:layout_alignTop="@+id/mainLogoImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/mainLogoImageView" />
+
+    <LinearLayout
+        android:id="@+id/collapse_layout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/mainLogoImageView"
+        android:layout_alignLeft="@+id/mainLogoImageView">
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="15dp" />
+        
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:textSize="30dp"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/collapse_layout"
+        android:layout_alignLeft="@+id/collapse_layout" />
+</RelativeLayout>

@@ -26,5 +26,8 @@
         <activity
             android:name=".activities.QuestionActivity"
             android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="landscape"/>
     </application>
 </manifest>

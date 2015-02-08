@@ -39,7 +39,7 @@ public class WelcomeActivity extends Activity {
     }
 
     private void onContinue() {
-        Intent questionIntent = new Intent(WelcomeActivity.this, QuestionActivity.class);
+        Intent questionIntent = new Intent(WelcomeActivity.this, MainActivity.class);
         startActivity(questionIntent);
         finish();
     }
