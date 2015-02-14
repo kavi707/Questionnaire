@@ -7,4 +7,7 @@ package com.android.kavi.questionnaire;
  */
 public class CommonUtils {
     public static final String SERVER_URL = "";
+    public static final int COMPLETED = 0;
+    public static final int STARTED = 1;
+    public static final int ON_PROGRESS = 2;
 }

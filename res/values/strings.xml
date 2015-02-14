@@ -1,5 +1,14 @@
 <resources>
 
     <string name="app_name">Questionnaire</string>
+    <array name="grades">
+        <item>Grade 6</item>
+        <item>Grade 7</item>
+        <item>Grade 8</item>
+        <item>Grade 9</item>
+        <item>Grade 10</item>
+        <item>Grade 11</item>
+        <item>Grade 12</item>
+    </array>
 
 </resources>

@@ -33,6 +33,14 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String ANS_FOUR = "ans_four";
     public static final String ANS_CORRECT = "ans_correct";
 
+    public static final String GAME_TABLE_NAME = "games";
+    public static final String GAME_ID = "game_id";
+    public static final String CONTESTANT_NAME = "contestant_name";
+    public static final String GRADE = "grade";
+    public static final String GAME_STATUS = "game_status";
+    public static final String CURRENT_QUE_NO = "current_que_no";
+    public static final String TIME = "time";
+
     public QuestionnaireSQLiteOpenHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
         this.dbContext = context;
@@ -41,6 +49,7 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createQuestionsTable(db);
+        createGamesTable(db);
     }
 
     @Override
@@ -58,6 +67,18 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
                 ANS_THREE + " text, " +
                 ANS_FOUR + " text, " +
                 ANS_CORRECT + " int " +
+                ");";
+        sqLiteDatabase.execSQL(createTableQuery);
+    }
+
+    private void createGamesTable(SQLiteDatabase sqLiteDatabase) {
+        String createTableQuery = "create table " + GAME_TABLE_NAME + " (" +
+                GAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT not null, " +
+                CONTESTANT_NAME + " text, " +
+                GRADE + " int, " +
+                GAME_STATUS + " int, " +
+                CURRENT_QUE_NO + " int, " +
+                TIME + " int " +
                 ");";
         sqLiteDatabase.execSQL(createTableQuery);
     }
@@ -117,5 +138,58 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
         }
 
         return questions;
+    }
+
+    public void saveNewGame(Games games) {
+
+        questionnaireDb = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(CONTESTANT_NAME, games.getContestantName());
+        values.put(GRADE, games.getGrade());
+        values.put(GAME_STATUS, games.getStatus());
+        values.put(CURRENT_QUE_NO, games.getCurrentQueNo());
+        values.put(TIME, games.getTime());
+
+        try {
+            questionnaireDb.insert(GAME_TABLE_NAME, null, values);
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+    }
+
+    public List<Games> getAllGames() {
+
+        List<Games> games = new ArrayList<Games>();
+        questionnaireDb = this.getWritableDatabase();
+        Games getGame = null;
+
+        try {
+            String queryString = "SELECT * FROM " + GAME_TABLE_NAME;
+            Cursor gamesCursor = questionnaireDb.rawQuery(queryString, null);
+
+            gamesCursor.moveToFirst();
+
+            if (!gamesCursor.isAfterLast()) {
+                do {
+                    getGame = new Games();
+                    getGame.setGameId(gamesCursor.getInt(0));
+                    getGame.setContestantName(gamesCursor.getString(1));
+                    getGame.setGrade(gamesCursor.getInt(2));
+                    getGame.setStatus(gamesCursor.getInt(3));
+                    getGame.setCurrentQueNo(gamesCursor.getInt(4));
+                    getGame.setTime(gamesCursor.getFloat(5));
+
+                    games.add(getGame);
+
+                } while (gamesCursor.moveToNext());
+            }
+            gamesCursor.close();
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+
+        return games;
     }
 }
