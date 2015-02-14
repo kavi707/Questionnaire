@@ -9,6 +9,7 @@ public class Question {
 
     private int questionId;
     private String question;
+    private int grade;
     private int questionLevel;
     private String ansOne;
     private String ansTwo;
@@ -30,6 +31,14 @@ public class Question {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     public int getQuestionLevel() {

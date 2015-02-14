@@ -61,6 +61,7 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
         String createTableQuery = "create table " + QUESTIONS_TABLE_NAME + " (" +
                 QUESTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT not null, " +
                 QUESTION + " text, " +
+                GRADE + " int, " +
                 QUESTION_LEVEL + " int, " +
                 ANS_ONE + " text, " +
                 ANS_TWO + " text, " +
@@ -90,6 +91,7 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(QUESTION, question.getQuestion());
+        values.put(GRADE, question.getGrade());
         values.put(QUESTION_LEVEL, question.getQuestionLevel());
         values.put(ANS_ONE, question.getAnsOne());
         values.put(ANS_TWO, question.getAnsTwo());
@@ -121,12 +123,13 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
                     getQuestion = new Question();
                     getQuestion.setQuestionId(questionCursor.getInt(0));
                     getQuestion.setQuestion(questionCursor.getString(1));
-                    getQuestion.setQuestionLevel(questionCursor.getInt(2));
-                    getQuestion.setAnsOne(questionCursor.getString(3));
-                    getQuestion.setAnsTwo(questionCursor.getString(4));
-                    getQuestion.setAnsThree(questionCursor.getString(5));
-                    getQuestion.setAnsFour(questionCursor.getString(6));
-                    getQuestion.setCorrectAns(questionCursor.getInt(7));
+                    getQuestion.setGrade(questionCursor.getInt(2));
+                    getQuestion.setQuestionLevel(questionCursor.getInt(3));
+                    getQuestion.setAnsOne(questionCursor.getString(4));
+                    getQuestion.setAnsTwo(questionCursor.getString(5));
+                    getQuestion.setAnsThree(questionCursor.getString(6));
+                    getQuestion.setAnsFour(questionCursor.getString(7));
+                    getQuestion.setCorrectAns(questionCursor.getInt(8));
 
                     questions.add(getQuestion);
 

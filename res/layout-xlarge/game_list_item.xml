@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="400dp"
+            android:layout_width="800dp"
             android:layout_height="50dp"
             android:text="Contestant"
             android:paddingLeft="15dp"
@@ -18,7 +18,7 @@
             android:typeface="normal"
             android:textColor="@color/white"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:id="@+id/contestantNameTextView"/>
 
         <TextView
@@ -28,7 +28,7 @@
             android:typeface="normal"
             android:gravity="center"
             android:textColor="@color/white"
-            android:layout_width="200dp"
+            android:layout_width="400dp"
             android:layout_height="20dp"
             android:id="@+id/gameStatusTextView"
             android:layout_alignParentTop="true"
