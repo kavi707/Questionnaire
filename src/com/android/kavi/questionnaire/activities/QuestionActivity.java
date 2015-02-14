@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.kavi.questionnaire.R;
+import com.android.kavi.questionnaire.database.Question;
+import com.android.kavi.questionnaire.database.QuestionnaireSQLiteOpenHelper;
+
+import java.util.List;
 
 /**
  * Created by kavi707 on 2/3/15.
@@ -33,10 +37,22 @@ public class QuestionActivity extends Activity {
     private final long startTime = 2 * 60 * 1000;
     private final long interval = 1 * 1000;
 
+    private int selectedGrade;
+    private List<Question> questions;
+    private int currentQueNo = 0;
+    private Question currentQuestion;
+    private QuestionnaireSQLiteOpenHelper questionnaireSQLiteOpenHelper = new QuestionnaireSQLiteOpenHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            selectedGrade = extras.getInt("SELECTED_GRADE");
+            questions = questionnaireSQLiteOpenHelper.getQuestionsFromGrade(selectedGrade);
+        }
 
         setUpView();
     }
@@ -53,18 +69,31 @@ public class QuestionActivity extends Activity {
         answerThreeButton = (Button) findViewById(R.id.answerThreeButton);
         answerFourButton = (Button) findViewById(R.id.answerFourButton);
 
+        logoImageView.performClick();
+
         logoImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO set new question and answers
 
-                countDownTimer = new MyCountDownTimer(startTime, interval);
-                if (!timerHasStarted) {
-                    countDownTimer.start();
-                    timerHasStarted = true;
-                } else {
-                    countDownTimer.cancel();
-                    timerHasStarted = false;
+                if (currentQueNo <= 9 && questions.size() != 0) {
+                    currentQuestion = questions.get(currentQueNo);
+
+                    questionTextView.setText(currentQuestion.getQuestion());
+                    answerOneButton.setText(currentQuestion.getAnsOne());
+                    answerTwoButton.setText(currentQuestion.getAnsTwo());
+                    answerThreeButton.setText(currentQuestion.getAnsThree());
+                    answerFourButton.setText(currentQuestion.getAnsFour());
+
+                    countDownTimer = new MyCountDownTimer(startTime, interval);
+                    if (!timerHasStarted) {
+                        countDownTimer.start();
+                        timerHasStarted = true;
+                    } else {
+                        countDownTimer.cancel();
+                        timerHasStarted = false;
+                    }
+
+                    currentQueNo++;
                 }
             }
         });
@@ -72,30 +101,48 @@ public class QuestionActivity extends Activity {
         answerOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                buttonBgChange(1);
             }
         });
 
         answerTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                buttonBgChange(2);
             }
         });
 
         answerThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                buttonBgChange(3);
             }
         });
 
         answerFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                buttonBgChange(4);
             }
         });
+    }
+
+    private void buttonBgChange(int ansNo) {
+
+        answerOneButton.setBackgroundResource(R.drawable.question_bg);
+        answerTwoButton.setBackgroundResource(R.drawable.question_bg);
+        answerThreeButton.setBackgroundResource(R.drawable.question_bg);
+        answerFourButton.setBackgroundResource(R.drawable.question_bg);
+
+        if (ansNo == 1) {
+            answerOneButton.setBackgroundResource(R.drawable.selected_question_bg);
+        } else if (ansNo == 2) {
+            answerTwoButton.setBackgroundResource(R.drawable.selected_question_bg);
+        } else if (ansNo == 3) {
+            answerThreeButton.setBackgroundResource(R.drawable.selected_question_bg);
+        } else if (ansNo == 4) {
+            answerFourButton.setBackgroundResource(R.drawable.selected_question_bg);
+        }
     }
 
     public class MyCountDownTimer extends CountDownTimer {

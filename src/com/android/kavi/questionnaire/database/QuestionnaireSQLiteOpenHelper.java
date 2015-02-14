@@ -106,7 +106,7 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<Question> getAllLocations() {
+    public List<Question> getAllQuestions() {
 
         List<Question> questions = new ArrayList<Question>();
         questionnaireDb = this.getWritableDatabase();
@@ -114,6 +114,43 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
 
         try {
             String queryString = "SELECT * FROM " + QUESTIONS_TABLE_NAME;
+            Cursor questionCursor = questionnaireDb.rawQuery(queryString, null);
+
+            questionCursor.moveToFirst();
+
+            if (!questionCursor.isAfterLast()) {
+                do {
+                    getQuestion = new Question();
+                    getQuestion.setQuestionId(questionCursor.getInt(0));
+                    getQuestion.setQuestion(questionCursor.getString(1));
+                    getQuestion.setGrade(questionCursor.getInt(2));
+                    getQuestion.setQuestionLevel(questionCursor.getInt(3));
+                    getQuestion.setAnsOne(questionCursor.getString(4));
+                    getQuestion.setAnsTwo(questionCursor.getString(5));
+                    getQuestion.setAnsThree(questionCursor.getString(6));
+                    getQuestion.setAnsFour(questionCursor.getString(7));
+                    getQuestion.setCorrectAns(questionCursor.getInt(8));
+
+                    questions.add(getQuestion);
+
+                } while (questionCursor.moveToNext());
+            }
+            questionCursor.close();
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+
+        return questions;
+    }
+
+    public List<Question> getQuestionsFromGrade(int grade) {
+
+        List<Question> questions = new ArrayList<Question>();
+        questionnaireDb = this.getWritableDatabase();
+        Question getQuestion = null;
+
+        try {
+            String queryString = "SELECT * FROM " + QUESTIONS_TABLE_NAME + " WHERE " + GRADE + " = " + grade;
             Cursor questionCursor = questionnaireDb.rawQuery(queryString, null);
 
             questionCursor.moveToFirst();

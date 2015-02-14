@@ -1,9 +1,13 @@
 package com.android.kavi.questionnaire.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,10 +39,11 @@ public class MainActivity extends Activity {
     private ListView gamesListView;
 
     private Context context = this;
+    private AlertDialog messageBalloonAlertDialog;
 
     private GamesItemAdapter gamesItemAdapter;
 
-    QuestionnaireSQLiteOpenHelper questionnaireSQLiteOpenHelper = new QuestionnaireSQLiteOpenHelper(this);
+    private QuestionnaireSQLiteOpenHelper questionnaireSQLiteOpenHelper = new QuestionnaireSQLiteOpenHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,26 @@ public class MainActivity extends Activity {
 
                 questionnaireSQLiteOpenHelper.saveNewGame(newGame);
                 loadGamesToListView();
+            }
+        });
+
+        gamesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Games selectedGame = (Games) gamesListView.getItemAtPosition(position);
+
+                messageBalloonAlertDialog = new AlertDialog.Builder(context)
+                        .setTitle("New Millionier")
+                        .setMessage(selectedGame.getContestantName())
+                        .setPositiveButton("Play", new AlertDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent questionsIntent = new Intent(MainActivity.this, QuestionActivity.class);
+                                questionsIntent.putExtra("SELECTED_GRADE", selectedGame.getGrade());
+                                startActivity(questionsIntent);
+                            }
+                        }).create();
+                messageBalloonAlertDialog.show();
             }
         });
     }
