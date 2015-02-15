@@ -6,7 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +27,7 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
     private Context dbContext;
 
     public static final String DB_NAME = "local_questions.sqlite";
+    public static final String DB_PATH = "/data/data/com.android.kavi.questionnaire/databases/";
     public static final int VERSION = 1;
 
     public static final String QUESTIONS_TABLE_NAME = "questions";
@@ -82,6 +89,30 @@ public class QuestionnaireSQLiteOpenHelper extends SQLiteOpenHelper {
                 TIME + " int " +
                 ");";
         sqLiteDatabase.execSQL(createTableQuery);
+    }
+
+    /**
+     * backup the database (only for application dev usage)
+     * @throws IOException
+     */
+    public void backupDatabase() throws IOException {
+        String inFileName = DB_PATH + DB_NAME;
+        File dbFile = new File(inFileName);
+        FileInputStream fis = new FileInputStream(dbFile);
+
+        String outFileName = Environment.getExternalStorageDirectory()+"/MYDB";
+
+        OutputStream output = new FileOutputStream(outFileName);
+        //transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = fis.read(buffer))>0){
+            output.write(buffer, 0, length);
+        }
+        //Close the streams
+        output.flush();
+        output.close();
+        fis.close();
     }
 
     public void saveNewQuestion(Question question) {

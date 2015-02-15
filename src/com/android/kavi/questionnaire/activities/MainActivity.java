@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
     private EditText contestantNameEditText;
     private Spinner gradeSpinner;
     private Button saveGameButton;
+    private Button addQuestionViewBtn;
     private ListView gamesListView;
 
     private Context context = this;
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
         contestantNameEditText = (EditText) findViewById(R.id.newContestantNameEditText);
         gradeSpinner = (Spinner) findViewById(R.id.gradeSpinner);
         saveGameButton = (Button) findViewById(R.id.saveNewGameButton);
+        addQuestionViewBtn = (Button) findViewById(R.id.addQuestionViewBtn);
 
         gamesListView = (ListView) findViewById(R.id.contestantsListView);
         loadGamesToListView();
@@ -107,6 +109,14 @@ public class MainActivity extends Activity {
                             }
                         }).create();
                 messageBalloonAlertDialog.show();
+            }
+        });
+
+        addQuestionViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addIntent = new Intent(MainActivity.this, AddQuestionActivity.class);
+                startActivity(addIntent);
             }
         });
     }
