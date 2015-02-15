@@ -44,7 +44,7 @@ public class QuestionActivity extends Activity {
     private QuestionnaireSQLiteOpenHelper questionnaireSQLiteOpenHelper = new QuestionnaireSQLiteOpenHelper(this);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) { 
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
@@ -69,31 +69,18 @@ public class QuestionActivity extends Activity {
         answerThreeButton = (Button) findViewById(R.id.answerThreeButton);
         answerFourButton = (Button) findViewById(R.id.answerFourButton);
 
-        logoImageView.performClick();
+        if (questions.size() != 0)
+            setQuestion(questions.get(currentQueNo));
 
         logoImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (currentQueNo <= 9 && questions.size() != 0) {
+                currentQueNo++;
+
+                if (currentQueNo < questions.size()) {
                     currentQuestion = questions.get(currentQueNo);
-
-                    questionTextView.setText(currentQuestion.getQuestion());
-                    answerOneButton.setText(currentQuestion.getAnsOne());
-                    answerTwoButton.setText(currentQuestion.getAnsTwo());
-                    answerThreeButton.setText(currentQuestion.getAnsThree());
-                    answerFourButton.setText(currentQuestion.getAnsFour());
-
-                    countDownTimer = new MyCountDownTimer(startTime, interval);
-                    if (!timerHasStarted) {
-                        countDownTimer.start();
-                        timerHasStarted = true;
-                    } else {
-                        countDownTimer.cancel();
-                        timerHasStarted = false;
-                    }
-
-                    currentQueNo++;
+                    setQuestion(currentQuestion);
                 }
             }
         });
@@ -125,6 +112,23 @@ public class QuestionActivity extends Activity {
                 buttonBgChange(4);
             }
         });
+    }
+
+    private void setQuestion(Question question) {
+        questionTextView.setText(question.getQuestion());
+        answerOneButton.setText(question.getAnsOne());
+        answerTwoButton.setText(question.getAnsTwo());
+        answerThreeButton.setText(question.getAnsThree());
+        answerFourButton.setText(question.getAnsFour());
+
+        countDownTimer = new MyCountDownTimer(startTime, interval);
+        if (!timerHasStarted) {
+            countDownTimer.start();
+            timerHasStarted = true;
+        } else {
+            countDownTimer.cancel();
+            timerHasStarted = false;
+        }
     }
 
     private void buttonBgChange(int ansNo) {
